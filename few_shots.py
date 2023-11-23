@@ -1,34 +1,32 @@
-few_shots = [
-    {'Question' : "How many t-shirts do we have left for Nike in XS size and white color?",
-     'SQLQuery' : "SELECT sum(stock_quantity) FROM t_shirts WHERE brand = 'Nike' AND color = 'White' AND size = 'XS'",
-     'SQLResult': "Result of the SQL query",
-     'Answer' : "91"},
-    {'Question': "How much is the total price of the inventory for all S-size t-shirts?",
-     'SQLQuery':"SELECT SUM(price*stock_quantity) FROM t_shirts WHERE size = 'S'",
-     'SQLResult': "Result of the SQL query",
-     'Answer': "22292"},
-    {'Question': "If we have to sell all the Levi’s T-shirts today with discounts applied. How much revenue  our store will generate (post discounts)?" ,
-     'SQLQuery' : """SELECT sum(a.total_amount * ((100-COALESCE(discounts.pct_discount,0))/100)) as total_revenue from
-(select sum(price*stock_quantity) as total_amount, t_shirt_id from t_shirts where brand = 'Levi'
-group by t_shirt_id) a left join discounts on a.t_shirt_id = discounts.t_shirt_id
- """,
-     'SQLResult': "Result of the SQL query",
-     'Answer': "16725.4"} ,
-     {'Question' : "If we have to sell all the Levi’s T-shirts today. How much revenue our store will generate without discount?" ,
-      'SQLQuery': "SELECT SUM(price * stock_quantity) FROM t_shirts WHERE brand = 'Levi'",
-      'SQLResult': "Result of the SQL query",
-      'Answer' : "17462"},
-    {'Question': "How many white color Levi's shirt I have?",
-     'SQLQuery' : "SELECT sum(stock_quantity) FROM t_shirts WHERE brand = 'Levi' AND color = 'White'",
-     'SQLResult': "Result of the SQL query",
-     'Answer' : "290"
-     },
-    {'Question': "how much sales amount will be generated if we sell all large size t shirts today in nike brand after discounts?",
-     'SQLQuery' : """SELECT sum(a.total_amount * ((100-COALESCE(discounts.pct_discount,0))/100)) as total_revenue from
-(select sum(price*stock_quantity) as total_amount, t_shirt_id from t_shirts where brand = 'Nike' and size="L"
-group by t_shirt_id) a left join discounts on a.t_shirt_id = discounts.t_shirt_id
- """,
-     'SQLResult': "Result of the SQL query",
-     'Answer' : "290"
+kpmg_questions = [
+    {
+        'Question': "How many employees work in the Finance department?",
+        'SQLQuery': "SELECT COUNT(*) FROM Employees WHERE Department = 'Finance'",
+        'Answer': "3"
+    },
+    {
+        'Question': "What is the average salary of employees hired in 2023?",
+        'SQLQuery': "SELECT AVG(Salary) FROM Employees WHERE YEAR(HireDate) = 2023",
+        'Answer': "67600.00"
+    },
+    {
+        'Question': "List employees who have managers and their manager's names.",
+        'SQLQuery': "SELECT e.FirstName, e.LastName, m.FirstName AS Manager_FirstName, m.LastName AS Manager_LastName FROM Employees e LEFT JOIN Employees m ON e.ManagerID = m.EmployeeID WHERE e.ManagerID IS NOT NULL",
+        'Answer': "Sample result set with employee names and their manager names"
+    },
+    {
+        'Question': "How many employees were hired before January 1, 2022?",
+        'SQLQuery': "SELECT COUNT(*) FROM Employees WHERE HireDate < '2022-01-01'",
+        'Answer': "5"
+    },
+    {
+        'Question': "Count the number of employees in each department.",
+        'SQLQuery': "SELECT Department, COUNT(*) AS EmployeeCount FROM Employees GROUP BY Department",
+        'Answer': "Sample result set with department names and employee counts"
+    },
+    {
+        'Question': "Retrieve the email addresses and phone numbers of all employees.",
+        'SQLQuery': "SELECT FirstName, LastName, Email, PhoneNumber FROM Employees",
+        'Answer': "Sample result set with employee names, emails, and phone numbers"
     }
 ]
